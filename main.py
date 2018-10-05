@@ -7,11 +7,14 @@ yPosition = 0.0
 
 # * Video frame re-scale function. Takes in a frame and re-scale that.
 # Can be replaced by imutils.resize*()
+
+
 def rescale_frame(frame, percent):
     width = int(frame.shape[1] * percent / 100)
     height = int(frame.shape[0] * percent / 100)
     dim = (width, height)
     return cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+
 
  # * Start of the tracker selection:
 tracker_types = ['BOOSTING', 'MIL', 'KCF',
@@ -56,7 +59,7 @@ bbox = cv2.selectROI(frame, False)
 # Initialize tracker with first frame and bounding box
 ok = tracker.init(frame, bbox)
 
-#*Store the initial xposition and y position
+# *Store the initial xposition and y position
 xPosition = bbox[0]
 yPosition = bbox[1]
 
@@ -79,18 +82,30 @@ while (1 > 0):
     # Update tracker and prints out the bounding box
     track_status, bbox = tracker.update(frame)
     print("DEBUG: Current bounding box array is:", bbox)
-    
+
     # ! Debug section for printing movement
-    if ((bbox[0] -xPosition)>0):
-        print ("Move Left")
+    # TODO: Add corresponding action in the future
+    if ((bbox[0] - xPosition) > 0):
+        print("Moving RIght! Current X Position: ",
+              bbox[0], " Last X position", xPosition)
+    elif ((bbox[0] - xPosition) < 0):
+        print("Moving Left! Current X Position: ",
+              bbox[0], " Last X position", xPosition)
     else:
-        print ("Move Right")
+        print("No Movement! Current X Position: ",
+            bbox[0], " Last X position", xPosition)
+    xPosition = bbox[0]
 
-    if ((bbox[1] -yPosition)>0):
-        print ("Move closer")
+    if ((bbox[1] - yPosition) > 0):
+        print("Moving Closer! Current Y Position: ",
+              bbox[1], " Last Y position", yPosition)
+    elif ((bbox[1] - yPosition) < 0):
+        print("Moving Farther! Current Y Position: ",
+              bbox[1], " Last Y position", xPosition)
     else:
-        print ("Move farther")
-
+        print("No Movement! Current Y Position: ",
+              bbox[1], " Last Y position", yPosition)
+    yPosition = bbox[1]
 
     # * DEBUG: Calculate Frames per second (FPS)
     fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)
@@ -112,7 +127,7 @@ while (1 > 0):
 
     # Display result
     cv2.imshow("Tracking", frame)
-    
+
     # Exit if ESC pressed
     k = cv2.waitKey(1) & 0xff
     if k == 27:
