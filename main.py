@@ -2,10 +2,11 @@ import cv2
 import sys
 import imutils
 
+xPosition = 0.0
+yPosition = 0.0
+
 # * Video frame re-scale function. Takes in a frame and re-scale that.
 # Can be replaced by imutils.resize*()
-
-
 def rescale_frame(frame, percent):
     width = int(frame.shape[1] * percent / 100)
     height = int(frame.shape[0] * percent / 100)
@@ -55,6 +56,10 @@ bbox = cv2.selectROI(frame, False)
 # Initialize tracker with first frame and bounding box
 ok = tracker.init(frame, bbox)
 
+#*Store the initial xposition and y position
+xPosition = bbox[0]
+yPosition = bbox[1]
+
 # * Main Program loop
 while (1 > 0):
     # * Read a new frame, and test frame
@@ -74,6 +79,18 @@ while (1 > 0):
     # Update tracker and prints out the bounding box
     track_status, bbox = tracker.update(frame)
     print("DEBUG: Current bounding box array is:", bbox)
+    
+    # ! Debug section for printing movement
+    if ((bbox[0] -xPosition)>0):
+        print ("Move Left")
+    else:
+        print ("Move Right")
+
+    if ((bbox[1] -yPosition)>0):
+        print ("Move closer")
+    else:
+        print ("Move farther")
+
 
     # * DEBUG: Calculate Frames per second (FPS)
     fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)
