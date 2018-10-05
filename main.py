@@ -1,7 +1,7 @@
 import cv2
 import sys
 
-def rescale_frame(frame, percent=75):
+def rescale_frame(frame, percent):
     width = int(frame.shape[1] * percent/ 100)
     height = int(frame.shape[0] * percent/ 100)
     dim = (width, height)
