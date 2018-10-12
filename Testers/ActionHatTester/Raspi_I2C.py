@@ -1,5 +1,5 @@
 import re
-import smbus
+import smbus2
 
 # ===========================================================================
 # Raspi_I2C Class
@@ -40,7 +40,7 @@ class Raspi_I2C(object):
         # Alternatively, you can hard-code the bus version below:
         # self.bus = smbus.SMBus(0); # Force I2C0 (early 256MB Pi's)
         # self.bus = smbus.SMBus(1); # Force I2C1 (512MB Pi's)
-        self.bus = smbus.SMBus(
+        self.bus = smbus2.SMBus(
             busnum if busnum >= 0 else Raspi_I2C.getPiI2CBusNumber())
         self.debug = debug
 
