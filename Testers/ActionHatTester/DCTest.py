@@ -32,7 +32,7 @@ rightMotor.run(Raspi_MotorHAT.RELEASE)
 leftMotor.run(Raspi_MotorHAT.RELEASE)
 
 while (True):
-    print("Forward! ")
+    print("Switch to Forward! ")
     rightMotor.run(Raspi_MotorHAT.FORWARD)
     leftMotor.run(Raspi_MotorHAT.FORWARD)
 
@@ -42,7 +42,8 @@ while (True):
         leftMotor.setSpeed(i)
         time.sleep(0.01)
 
-    time.sleep(5)
+    print("\tSpeed up complete...")
+    time.sleep(20)
 
     print("\tSlow down...")
     for i in reversed(list(range(255))):
@@ -50,9 +51,9 @@ while (True):
         leftMotor.setSpeed(i)
         time.sleep(0.01)
 
-    time.sleep(5)
+    time.sleep(1)
 
-    print("Backward! ")
+    print("Switch to Backward! ")
     rightMotor.run(Raspi_MotorHAT.BACKWARD)
     leftMotor.run(Raspi_MotorHAT.BACKWARD)
 
@@ -61,8 +62,9 @@ while (True):
         rightMotor.setSpeed(i)
         leftMotor.setSpeed(i)
         time.sleep(0.01)
-
-    time.sleep(5)
+    
+    print("\tSpeed up complete...")
+    time.sleep(20)
 
     print("\tSlow down...")
     for i in reversed(list(range(255))):
@@ -70,9 +72,9 @@ while (True):
         leftMotor.setSpeed(i)
         time.sleep(0.01)
 
-    time.sleep(5)
+    time.sleep(1)
 
-    print("Release")
+    print("Reset!")
     rightMotor.run(Raspi_MotorHAT.RELEASE)
     leftMotor.run(Raspi_MotorHAT.RELEASE)
-    time.sleep(10.0)
+    time.sleep(5.0)
