@@ -14,7 +14,7 @@ servoMax = 600  # Max pulse length out of 4096
 
 def setServoPulse(channel, pulse):
   pulseLength = 1000000                   # 1,000,000 us per second
-  pulseLength /= 60                       # 60 Hz
+  pulseLength /= 50                       # 50 Hz
   print("%d us per period" % pulseLength)
   pulseLength /= 4096                     # 12 bits of resolution
   print("%d us per bit" % pulseLength)
@@ -22,7 +22,7 @@ def setServoPulse(channel, pulse):
   pulse /= pulseLength
   pwm.setPWM(channel, 0, pulse)
 
-pwm.setPWMFreq(60)                        # Set frequency to 60 Hz
+pwm.setPWMFreq(50)                        # Set frequency to 50 Hz
 while (True):
   # Change speed of continuous servo on channel O
   pwm.setPWM(0, 0, servoMin)

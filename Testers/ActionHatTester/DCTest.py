@@ -19,42 +19,60 @@ def turnOffMotors():
 atexit.register(turnOffMotors)
 
 # DC motor test!
-myMotor = mh.getMotor(3)
+rightMotor = mh.getMotor(1)
+leftMotor = mh.getMotor(2)
 
 # set the speed to start, from 0 (off) to 255 (max speed)
-myMotor.setSpeed(150)
-myMotor.run(Raspi_MotorHAT.FORWARD)
+rightMotor.setSpeed(255)
+leftMotor.setSpeed(255)
+rightMotor.run(Raspi_MotorHAT.FORWARD)
+leftMotor.run(Raspi_MotorHAT.FORWARD)
 # turn on motor
-myMotor.run(Raspi_MotorHAT.RELEASE)
-
+rightMotor.run(Raspi_MotorHAT.RELEASE)
+leftMotor.run(Raspi_MotorHAT.RELEASE)
 
 while (True):
     print("Forward! ")
-    myMotor.run(Raspi_MotorHAT.FORWARD)
+    rightMotor.run(Raspi_MotorHAT.FORWARD)
+    leftMotor.run(Raspi_MotorHAT.FORWARD)
 
     print("\tSpeed up...")
     for i in range(255):
-        myMotor.setSpeed(i)
+        rightMotor.setSpeed(i)
+        leftMotor.setSpeed(i)
         time.sleep(0.01)
+
+    time.sleep(5)
 
     print("\tSlow down...")
     for i in reversed(list(range(255))):
-        myMotor.setSpeed(i)
+        rightMotor.setSpeed(i)
+        leftMotor.setSpeed(i)
         time.sleep(0.01)
+
+    time.sleep(5)
 
     print("Backward! ")
-    myMotor.run(Raspi_MotorHAT.BACKWARD)
+    rightMotor.run(Raspi_MotorHAT.BACKWARD)
+    leftMotor.run(Raspi_MotorHAT.BACKWARD)
 
     print("\tSpeed up...")
     for i in range(255):
-        myMotor.setSpeed(i)
+        rightMotor.setSpeed(i)
+        leftMotor.setSpeed(i)
         time.sleep(0.01)
+
+    time.sleep(5)
 
     print("\tSlow down...")
     for i in reversed(list(range(255))):
-        myMotor.setSpeed(i)
+        rightMotor.setSpeed(i)
+        leftMotor.setSpeed(i)
         time.sleep(0.01)
 
+    time.sleep(5)
+
     print("Release")
-    myMotor.run(Raspi_MotorHAT.RELEASE)
-    time.sleep(1.0)
+    rightMotor.run(Raspi_MotorHAT.RELEASE)
+    leftMotor.run(Raspi_MotorHAT.RELEASE)
+    time.sleep(10.0)
