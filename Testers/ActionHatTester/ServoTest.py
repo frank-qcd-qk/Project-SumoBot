@@ -23,7 +23,7 @@ def set_servo_pulse(channel, pulse):
 pwm.setPWMFreq(50)
 
 print('Moving servo on channel 0, press Ctrl-C to quit...')
-i = 0;
+i = 0
 while (i<2):
     # Move servo on channel O between extremes.
     pwm.setPWM(0, 0, servo_min)
