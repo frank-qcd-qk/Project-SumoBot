@@ -1,33 +1,11 @@
 import cv2
 import sys
 import imutils
-
-# * the following is used for easier set the object and detection!
-
-from picamera.array import PiRGBArray
-from picamera import PiCamera
+import time
 
 import ServoControl as servo
-
 servo.reset()
 
-for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-    	# grab the raw NumPy array representing the image, then initialize the timestamp
-	# and occupied/unoccupied text
-	image = frame.array
- 
-	# show the frame
-	cv2.imshow("Frame", image)
-	key = cv2.waitKey(1) & 0xFF
- 
-	# clear the stream in preparation for the next frame
-	rawCapture.truncate(0)
- 
-	# if the `q` key was pressed, break from the loop
-	if key == ord("q"):
-		break
-
-# * END!!!
 
 xPosition = 0.0
 yPosition = 0.0
@@ -35,6 +13,7 @@ yPosition = 0.0
 # * Video frame re-scale function. Takes in a frame and re-scale that.
 # Can be replaced by imutils.resize*()
 
+time.sleep(10)
 
 def rescale_frame(frame, percent):
     width = int(frame.shape[1] * percent / 100)
