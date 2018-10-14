@@ -2,6 +2,8 @@ import cv2
 import sys
 import imutils
 
+import ServoControl as Servo
+
 xPosition = 0.0
 yPosition = 0.0
 

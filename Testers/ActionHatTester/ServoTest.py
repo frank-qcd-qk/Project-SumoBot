@@ -2,35 +2,37 @@ from Raspi_PWM_Servo_Driver import PWM
 import time
 
 # Initialise the PWM device using the default address
-# bmp = PWM(0x40, debug=True)
 pwm = PWM(0x6F)
+
+
+
+
 # Configure min and max servo pulse lengths
-servo_min = 150  # Min pulse length out of 4096
-servo_max = 600  # Max pulse length out of 4096
+SERVOMIN = 150  # Min pulse length, us (tick 184/4096)
+SERVOMAX = 550  # Max pulse length, us  (tick 430/4096)
+servoMid = SERVOMAX - ((SERVOMAX-SERVOMIN)/2) # Midpoint pulse length, us
+FREQUENCY = 50 # frequency length, Hz
 
-# Helper function to make setting a servo pulse width simpler.
-def set_servo_pulse(channel, pulse):
-    pulse_length = 1000000    # 1,000,000 us per second
-    pulse_length /= 50       # 50 Hz
-    print('{0}us per period'.format(pulse_length))
-    pulse_length /= 4096     # 12 bits of resolution
-    print('{0}us per bit'.format(pulse_length))
-    pulse *= 1000
-    pulse /= pulse_length
-    pwm.setPWM(channel, 0, pulse)
+pwm.setPWMFreq(FREQUENCY) # Set frequency
 
-# Set frequency to 50hz, good for servos.
-pwm.setPWMFreq(50)
+def map(x, in_min, in_max, out_min, out_max):
+    return int((x-in_min) * (out_max-out_min) / (in_max-in_min) + out_min)
+
+def pulseWidthCal(inputAngle):
+      pulse_wide = map(inputAngle, 0, 180, SERVOMIN, SERVOMAX)
+      print("Current pulse is:" , pulse_wide)
+      return pulse_wide
 
 print('Moving servo on channel 0, press Ctrl-C to quit...')
-i = 0
-while (i<2):
-    # Move servo on channel O between extremes.
-    pwm.setPWM(0, 0, servo_min)
-    time.sleep(1)
-    pwm.setPWM(0, 0, servo_max)
-    time.sleep(1)
-    print (i)
-    i+=1
+while (True):
+      print("Going to servo 0 Degree...")
+      pwm.setPWM(0, 0, pulseWidthCal(0))
+      time.sleep(5)
 
-pwm.setPWM(0,0,350)
+      print("Going to servo 90 Degree...")
+      pwm.setPWM(0, 0, pulseWidthCal(90))
+      time.sleep(5)
+
+      print("Going to servo 180 Degree...")
+      pwm.setPWM(0, 0, pulseWidthCal(180))
+      time.sleep(5)
