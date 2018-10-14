@@ -2,7 +2,32 @@ import cv2
 import sys
 import imutils
 
-import ServoControl as Servo
+# * the following is used for easier set the object and detection!
+
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+
+import ServoControl as servo
+
+servo.reset()
+
+for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+    	# grab the raw NumPy array representing the image, then initialize the timestamp
+	# and occupied/unoccupied text
+	image = frame.array
+ 
+	# show the frame
+	cv2.imshow("Frame", image)
+	key = cv2.waitKey(1) & 0xFF
+ 
+	# clear the stream in preparation for the next frame
+	rawCapture.truncate(0)
+ 
+	# if the `q` key was pressed, break from the loop
+	if key == ord("q"):
+		break
+
+# * END!!!
 
 xPosition = 0.0
 yPosition = 0.0
@@ -108,6 +133,11 @@ while (1 > 0):
         print("No Movement! Current Y Position: ",
               bbox[1], " Last Y position", yPosition)
     yPosition = bbox[1]
+
+
+
+
+
 
     # * DEBUG: Calculate Frames per second (FPS)
     fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)
