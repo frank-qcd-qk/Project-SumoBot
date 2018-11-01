@@ -8,7 +8,7 @@ from Raspi_PWM_Servo_Driver import PWM  # Servo Control
 SERVOMIN = 150  # Min pulse length, us (tick 184/4096)
 SERVOMAX = 550  # Max pulse length, us  (tick 430/4096)
 servoMid = SERVOMAX - ((SERVOMAX-SERVOMIN)/2)  # Midpoint pulse length, us
-FREQUENCY = 50  # frequency length, Hz
+FREQUENCY = 1600  # frequency length, Hz
 
 
 #! Initialization

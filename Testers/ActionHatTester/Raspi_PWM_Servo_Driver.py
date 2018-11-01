@@ -38,7 +38,7 @@ class PWM:
         "Sends a software reset (SWRST) command to all the servo drivers on the bus"
         cls.general_call_i2c.writeRaw8(0x06)        # SWRST
 
-    def __init__(self, address=0x40, debug=False):
+    def __init__(self, address=0x40, debug=True):
         self.i2c = Raspi_I2C(address)
         self.i2c.debug = debug
         self.address = address
