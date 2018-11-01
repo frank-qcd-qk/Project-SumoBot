@@ -14,7 +14,7 @@ SERVONEUTRAL_PAN = 350
 TILT_CHANNEL = 1
 SERVOMIN_TILT = 150
 SERVOMAX_TILT = 400
-SERVONEUTRAL_TILT = 150 
+SERVONEUTRAL_TILT = 200 
 
 pwm.setPWM(PAN_CHANNEL,0,SERVONEUTRAL_PAN)
 pwm.setPWM(TILT_CHANNEL,0,SERVONEUTRAL_TILT)
@@ -23,16 +23,16 @@ time.sleep(5)
 
 
 while (True):
-    print("Moving Pan....")
-    pwm.setPWM(PAN_CHANNEL, 0, 300)
-    time.sleep(2)
-
-    print("Reset....")
-    pwm.setPWM(PAN_CHANNEL, 0, 300)
-    time.sleep(2)
-
-    print("Moving Pan....")
-    pwm.setPWM(PAN_CHANNEL, 0, 400)
-    time.sleep(2)
-
+    i = 300
+    while (i<400):
+        print("Moving Pan....")
+        pwm.setPWM(PAN_CHANNEL, 0, i)
+        time.sleep(0.5)
+        i = i + 1
+    
+    while (i>300):
+        print("Moving Pan....")
+        pwm.setPWM(PAN_CHANNEL, 0, i)
+        time.sleep(0.5)
+        i = i - 1
 

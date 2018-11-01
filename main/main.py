@@ -12,9 +12,6 @@ yPosition = 0.0
 
 # * Video frame re-scale function. Takes in a frame and re-scale that.
 # Can be replaced by imutils.resize*()
-
-time.sleep(10)
-
 def rescale_frame(frame, percent):
     width = int(frame.shape[1] * percent / 100)
     height = int(frame.shape[0] * percent / 100)

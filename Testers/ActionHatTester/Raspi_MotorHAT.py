@@ -232,7 +232,7 @@ class Raspi_MotorHAT:
     INTERLEAVE = 3
     MICROSTEP = 4
 
-    def __init__(self, addr=0x60, freq=1600):
+    def __init__(self, addr=0x6F, freq=50):
         self._i2caddr = addr            # default addr on HAT
         self._frequency = freq		# default @1600Hz PWM freq
         self.motors = [Raspi_DCMotor(self, m) for m in range(4)]
