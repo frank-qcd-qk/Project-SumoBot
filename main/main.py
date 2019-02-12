@@ -2,16 +2,43 @@ import cv2
 import sys
 import imutils
 import time
+from Raspi_PWM_Servo_Driver import PWM
 
-import ServoControl as servo
-servo.reset()
+#! Global Variables
 
 
-xPosition = 0.0
-yPosition = 0.0
 
-# * Video frame re-scale function. Takes in a frame and re-scale that.
-# Can be replaced by imutils.resize*()
+#! Robot Initialization
+#* Motor initialization
+
+
+
+
+
+
+
+pwm = PWM(0x6F) #Hat setting, do not change!!!
+pwm.setPWMFreq(50) # Set frequency to 50Hz, mandatory!!!
+# Following are magic numbers, Do not change!!!
+G_FREQUENCY = 50
+#Pan setting
+PAN_CHANNEL = 0
+SERVOMIN_PAN = 150 #Pan Minimal pulse
+SERVOMup1AX_PAN = 550 #Pan Max pulse
+SERVONEUTRAL_PAN = 350
+#Tilt Setting
+TILT_CHANNEL = 1
+SERVOMIN_TILT = 150
+SERVOMAX_TILT = 400
+SERVONEUTRAL_TILT = 200 
+
+
+
+def map(x, in_min, in_max, out_min, out_max):
+    return int((x-in_min) * (out_max-out_min) / (in_max-in_min) + out_min)
+
+
+# Video frame re-scale function. Takes in a frame and re-scale that.
 def rescale_frame(frame, percent):
     width = int(frame.shape[1] * percent / 100)
     height = int(frame.shape[0] * percent / 100)
@@ -19,24 +46,21 @@ def rescale_frame(frame, percent):
     return cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
 
 
- # * Start of the tracker selection:
-tracker_types = ['BOOSTING', 'MIL', 'KCF',
-                 'TLD', 'MEDIANFLOW', 'GOTURN', 'MOSSE']
-tracker_type = tracker_types[6]  # ! Currently set for coding
-if tracker_type == 'BOOSTING':
-    tracker = cv2.TrackerBoosting_create()
-if tracker_type == 'MIL':
-    tracker = cv2.TrackerMIL_create()
-if tracker_type == 'KCF':
-    tracker = cv2.TrackerKCF_create()
-if tracker_type == 'TLD':
-    tracker = cv2.TrackerTLD_create()
-if tracker_type == 'MEDIANFLOW':
-    tracker = cv2.TrackerMedianFlow_create()
-if tracker_type == 'GOTURN':
-    tracker = cv2.TrackerGOTURN_create()
-if tracker_type == 'MOSSE':
-    tracker = cv2.TrackerMOSSE_create()
+
+def reset():
+    pwm.setPWM(PAN_CHANNEL,0,SERVONEUTRAL_PAN)
+    pwm.setPWM(TILT_CHANNEL,0,SERVONEUTRAL_TILT)
+
+def movePan(desiredPulse):
+    pwm.setPWM(PAN_CHANNEL,0,desiredPulse)
+
+servo.reset()
+
+xPosition = 0.0
+yPosition = 0.0
+
+
+tracker = cv2.TrackerMOSSE_create() 
 
 # * Read video and test video validity
 video = cv2.VideoCapture(0)
